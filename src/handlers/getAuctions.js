@@ -7,11 +7,13 @@ const db = new DynamoDBClient();
 async function getAuctions(event, context) {
   let auctions;
 
+  const params = {
+    TableName: process.env.AUCTIONS_TABLE_NAME,
+  };
+
   try {
 
-    const result = await db.send(new ScanCommand({
-      TableName: process.env.AUCTIONS_TABLE_NAME,
-    }));
+    const result = await db.send(new ScanCommand(params));
 
     auctions = result.Items;
     
